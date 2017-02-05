@@ -1,7 +1,5 @@
 package Opgave1;
 import static org.junit.Assert.*;
-
-import org.junit.After;
 import org.junit.Test;
 
 public class StakTest {
@@ -30,6 +28,31 @@ public class StakTest {
 		stak.pop();
 		assertTrue(stak.empty());
 		//Vi har nu testet alle metoderne og kan komme frem til at de alle virker.
+	}
+	@Test
+	public void LinkedStakTest()
+	{
+		LinkedStak link = new LinkedStak();
+		//Test af at nyoprettet LinkList er tomt.
+		assertTrue(link.empty());
+		//pusher ting i LinkedList og tjekker om det er fyldt
+		link.push("Dette");
+		link.push("er");
+		link.push("en");
+		link.push("mærkelig");
+		link.push("sætning");
+		assertTrue(link.full());
+		//vi laver herefter en show, og ser om den er lig sætningen vi forventer
+		link.show();		
+		//Popper alt i linkedlist og tjekker om det er tomt. Forventer det er det.
+		link.pop();
+		link.pop();
+		link.pop();
+		link.pop();
+		link.pop();
+		assertTrue(link.empty());
+		//Vi har nu testet alle metoderne og kan komme frem til at de alle virker.
+		
 	}
 	
 	

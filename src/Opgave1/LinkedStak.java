@@ -3,87 +3,116 @@ package Opgave1;
 public class LinkedStak implements Stak {
 
 	
-	class Element
+	private class Element
 	{
+		private Element last;
 		private String x;
 		private Element next;
+		
 	}
+
+
 	private Element first;
 	private Element actual;
+	private Element last;
 	
 	public LinkedStak(){
-		first = actual = null;
+		first = null;
+
 	}
 	
-	public void setFirst()
+	private void setFirst()
 	{
 		actual = first;
 	}
-	public void setNext(){
-		actual = actual.next;
-	}
-	public void save(String e){
+
+	private void save(String e){
 		actual.x = e;
 	}
-	public String get(){
+	private String get(){
 		return actual.x;
 	}
-	public void saveFirst(String e){
-		first.x = e;
-	}
-	public String getFirst(){
-		return first.x;
-	}
-	public void insertFirst(){
-		Element temp= new Element();
+
+	private void insertFirst(){
+		Element temp = new Element();
 		temp.next = first;
 		first = temp;
+		first.last = last;
 	}
-	public void insertNext(){
+	private void insertNext(){
 		Element temp = new Element();
-		temp.next = actual.next;
+		temp.last = actual;
 		actual.next = temp;
+		actual = temp;
+		
 	}
-	public void deleteFirst(){
-		first = first.next;
+	private void delete(){
+		if(actual == first){
+			first = actual = null;
+		}
+		
+		else if(full()){
+			Element temp = new Element();
+			temp = actual.last;
+			actual = temp;
+			actual.next = null;
+		}
+		
 	}
-	public void deleteNext(){
-		actual.next = actual.next.next;
-	}
-	public boolean empty2(){
-		return first == null;
-	}
-	public boolean last(){
-		return actual.next == null;
+	private void findLast(){
+		setFirst();
+		while(actual.next != null){
+			actual = actual.next;
+		}
 	}
 	
 	@Override
 	public void push(String e) {
-		
-		
+		if(first == null){
+			insertFirst();
+			setFirst();
+			save(e);	
+		}
+		else {
+			insertNext();
+			save(e);
+		}
 	}
 
 	@Override
 	public String pop() {
+		findLast();
+		String temp = actual.x;
+		delete();
+		if(actual != last)
+			findLast();
+		return temp;
+		
+
 		
 	}
+		
 
 	@Override
 	public boolean empty() {
-		// TODO Auto-generated method stub
-		return false;
+		return (first == null);
 	}
 
 	@Override
 	public boolean full() {
-		// TODO Auto-generated method stub
-		return false;
+		return (actual.next == null);
 	}
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
-		
+		while(actual.last != null){
+			System.out.print(get() + " ");
+			Element temp = new Element();
+			temp = actual.last;
+			actual = temp;
+		}
+		System.out.println(get());
+
 	}
 }
 	
